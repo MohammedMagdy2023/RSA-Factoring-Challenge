@@ -11,20 +11,22 @@ def factors(n):
 def handler(signum, frame):
     raise Exception("Time is up!")
 
-# This sets the alarm signal handler to your handler function.
-signal.signal(signal.SIGALRM, handler)
+def main():
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(5)
 
-# This schedules an alarm for 5 seconds in the future.
-signal.alarm(5)
+    try:    
+        source = sys.argv[1]
 
-try:    
-    source = sys.argv[1]
+        with open(source, "r") as f:
+            for line in f:
+                n = int(line.strip())
+                p, q = factors(n)
+                print("{:d}={:d}*{:d}".format(n, p, q))
 
-    with open(source, "r") as f:
-        for line in f:
-            n = int(line)
-            p, q = factors(n)
-            print("{:d}={:d}*{:d}".format(n, p, q))
+    except Exception:
+        print(Exception)
+        exit(0)
 
-except Exception:
-    print(Exception)
+if __name__ == '__main__':
+    main()
