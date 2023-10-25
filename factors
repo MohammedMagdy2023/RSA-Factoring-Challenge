@@ -11,22 +11,17 @@ def factors(n):
 def handler(signum, frame):
     raise Exception("Time is up!")
 
-def main():
-    signal.signal(signal.SIGALRM, handler)
-    signal.alarm(5)
+signal.signal(signal.SIGALRM, handler)
+signal.alarm(5)
 
-    try:    
-        source = sys.argv[1]
+try:    
+    source = sys.argv[1]
 
-        with open(source, "r") as f:
-            for line in f:
-                n = int(line.strip())
-                p, q = factors(n)
-                print("{:d}={:d}*{:d}".format(n, p, q))
+    with open(source, "r") as f:
+        for line in f:
+            n = int(line)
+            p, q = factors(n)
+            print("{:d}={:d}*{:d}".format(n, p, q))
 
-    except Exception:
-        print(Exception)
-        exit(0)
-
-if __name__ == '__main__':
-    main()
+except Exception:
+    print(Exception)
