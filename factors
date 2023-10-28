@@ -1,27 +1,28 @@
 #!/usr/bin/python3
-import sys
-import signal
+"""factorize given set of numbers in a file to product of two small numbers"""
+from sys import argv
 
-def factors(n):
-    for i in range(2, int(n ** 0.5) + 1):
-        if n % i == 0:
-            return n // i, i
-    return 1, n
+def factor(check_int):
+    """"find two small multiply of a given number"""
+    i = 2
 
-def handler(signum, frame):
-    raise Exception("Time is up!")
+    if check_int < 2:
+        return
+    
+    while check_int % i:
+        i += 1
+    print("{:.0f}={:.0f}*{:.0f}".format(check_int, check_int / i, i))
 
-signal.signal(signal.SIGALRM, handler)
-signal.alarm(5)
+if len(argv) != 2:
+    exit()
 
-try:    
-    source = sys.argv[1]
+try:
+    with open(argv[1]) as file:
+        line = file.readline()
 
-    with open(source, "r") as f:
-        for line in f:
-            n = int(line)
-            p, q = factors(n)
-            print("{:d}={:d}*{:d}".format(n, p, q))
-
-except Exception:
-    print(Exception)
+        while line != "":
+            check_int = int(line.split('\n')[0])
+            factor(check_int)
+            line = file.readline()
+except:
+    pass
