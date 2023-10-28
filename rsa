@@ -1,0 +1,29 @@
+#!/usr/bin/python3
+"""
+Factorize numbers from file into two prime numbers
+"""
+import sys
+
+
+def factorize():
+    try:
+        src = sys.argv[1]
+        with open(src) as f:
+            for check_int in f:
+                check_int = int(check_int)
+                if check_int % 2 == 0:
+                        print("{}={}*{}".format(check_int, check_int // 2, 2))
+                        continue
+                i = 3
+                while i < check_int // 2:
+                    if check_int % i == 0:
+                        print("{}={}*{}".format(check_int, check_int // i, i))
+                        break
+                    i = i + 2
+                if i == (check_int // 2) + 1:
+                    print("{}={}*{}".format(check_int, check_int, 1))
+    except (IndexError):
+        pass
+
+
+factorize()
